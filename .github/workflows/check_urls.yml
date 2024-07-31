@@ -1,38 +1,32 @@
-name: Check URLs
+name: Refresh URLs and Notify Telegram
 
 on:
   schedule:
-    - cron: '0 */2 * * *'  # 每2小时运行一次
+    - cron: '0 */2 * * *'  # 每两小时运行一次
   workflow_dispatch:
 
 jobs:
-  check-urls:
+  refresh-urls:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Check URLs
-      id: check
+    - name: Refresh URLs
       run: |
-        urls=("http://xn--mpus5ehyb.us.kg/api.php/timming/index.html?enforce=1&name=hw8" "https://xn--mpus5ehyb.us.kg/api.php/timming/index.html?enforce=1&name=%E8%87%AA%E5%8A%A8%E9%87%87%E9%9B%86" "https://xn--mpus5ehyb.us.kg/api.php/timming/index.html?enforce=1&name=liangzi")
-        results=""
+        urls=("http://xn--mpus5ehyb.us.kg/api.php/timming/index.html?enforce=1&name=hw8" "https://xn--mpus5ehyb.us.kg/api.php/timming/index.html?enforce=1&name=%E8%87%AA%E5%8A%A8%E9%87%87%E9%9B%86" "https://xn--mpus5ehyb.us.kg/api.php/timming/index.html?enforce=1&name=liangzi")  # 替换为你的 URL 列表
         for url in "${urls[@]}"; do
-          response=$(curl -o /dev/null -s -w "%{http_code}\n" "$url")
-          if [ "$response" -eq 200 ]; then
-            results+="URL: $url is up\n"
-          else
-            results+="URL: $url is down\n"
-          fi
+          curl -s "$url" > /dev/null
           sleep 10
         done
-        echo "$results" > result.txt
 
-    - name: Send Telegram Message
+    - name: Send Telegram Notification
       env:
         TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
       run: |
-        MESSAGE=$(cat result.txt)
-        curl -s -X POST https://api.telegram.org/bot${{ env.TELEGRAM_TOKEN }}/sendMessage -d chat_id=${{ env.TELEGRAM_CHAT_ID }} -d text="$MESSAGE"
+        STATUS="URLs refreshed successfully"
+        curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_TOKEN/sendMessage" \
+          -d chat_id="$TELEGRAM_CHAT_ID" \
+          -d text="$STATUS"
