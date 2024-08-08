@@ -15,7 +15,7 @@ jobs:
 
     - name: Refresh URLs
       run: |
-        urls=("http://xn--mpus5ehyb.us.kg/api.php/timming/index.html?enforce=1&name=hw8" "https://xn--mpus5ehyb.us.kg/api.php/timming/index.html?enforce=1&name=%E8%87%AA%E5%8A%A8%E9%87%87%E9%9B%86" "https://xn--mpus5ehyb.us.kg/api.php/timming/index.html?enforce=1&name=liangzi" "https://18av.us.kg/api.php/timming/index.html?enforce=1&name=ly" "https://18av.us.kg/api.php/timming/index.html?enforce=1&name=155" "https://18av.us.kg/api.php/timming/index.html?enforce=1&name=fh" "http://18av.us.kg/api.php/timming/index.html?enforce=1&name=yy" "http://18av.us.kg/api.php/timming/index.html?enforce=1&name=tt")  # 替换为你的 URL 列表
+        urls=("http://xn--mpus5ehyb.us.kg/api.php/timming/index.html?enforce=1&name=hw8" "https://xn--mpus5ehyb.us.kg/api.php/timming/index.html?enforce=1&name=%E8%87%AA%E5%8A%A8%E9%87%87%E9%9B%86" "https://xn--mpus5ehyb.us.kg/api.php/timming/index.html?enforce=1&name=liangzi" "https://18av.us.kg/api.php/timming/index.html?enforce=1&name=ly" "https://18av.us.kg/api.php/timming/index.html?enforce=1&name=155" "https://18av.us.kg/api.php/timming/index.html?enforce=1&name=fh" "http://18av.us.kg/api.php/timming/index.html?enforce=1&name=yy" "http://18av.us.kg/api.php/timming/index.html?enforce=1&name=tt" "https://xn--mpus5ehyb.us.kg/api.php/timming/index.html?enforce=1&name=ffm3u8")  # 替换为你的 URL 列表
         for url in "${urls[@]}"; do
           curl -s "$url" > /dev/null
           sleep 10
