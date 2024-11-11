@@ -2,7 +2,7 @@ name: Refresh URLs and Notify Telegram
 
 on:
   schedule:
-    - cron: '20 */3 * * *'  # 每两小时运行一次
+    - cron: '20 */6 * * *'  # 每两小时运行一次
   workflow_dispatch:
 
 jobs:
